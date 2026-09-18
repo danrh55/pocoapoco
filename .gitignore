@@ -1,6 +1,13 @@
 # Environment
 .env
 
+# Dependencies and build output
+node_modules/
+dist/
+
+# macOS
+.DS_Store
+
 # Agent tooling
 .agents/
 .claude/
