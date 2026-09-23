@@ -2,12 +2,12 @@
 
 Pocoapoco helps intermediate learners reach fluent written Spanish.
 
-The learner brings something real they want to say — a problem from their day, something to
-work out, something to vent about — and says it in Spanish. Where they fail, the app corrects
-them: one error at a time, without explaining, until they have written it themselves.
+The agent is the interface for the user where the interaction effect takes place and the entity
+that the user undergoes "negotiation for meaning" that is central to the interaction hypothesis for
+language learning. 
 
-Speech is out of scope. The goal is to make generation automatic in writing first, so that
-learning to speak costs less later.
+Speech is out of scope. The goal is to make generation automatic so that the user can solely
+focus on pronounciation when they start speaking. The purpose is to layer the cognitive load.
 
 - [`product/domain.md`](product/domain.md) — what this is, and what it rests on
 - [`product/conversation-loop.md`](product/conversation-loop.md) — how a turn runs
