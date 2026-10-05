@@ -4,31 +4,33 @@ What the current build includes, and what it leaves out.
 
 ## Includes
 
-Crosstalk. The engine speaks Spanish and the learner answers English. An English reply is analyzed, and if the intent was missed the meaning is negotiated with the learner before anything is said about it.
+Crosstalk. The engine speaks Spanish and the learner answers English. A reply is analyzed, and if the intent was missed the meaning is negotiated with the learner before anything is said about it.
 
-The flow is written and the components are wired. Every component is a stub that throws — the wiring resolves and the loop enters in the right order, but nothing past the first call runs.
+The main loop and the component boundaries. Every component is a stub that throws — the wiring resolves and the loop enters in the right order, but nothing past the first call runs.
 
 ## Excludes
 
-**Spanish input.** The learner writes no Spanish, so nothing they wrote can be corrected and the correction tools are unreachable. The negotiation runs, then the recast — there is no learner-authored sentence to work on. This is the first thing that changes.
+**Spanish input.** The learner writes no Spanish, so nothing they wrote can be corrected and the correction tools are unreachable. This is the first thing that changes.
 
 **The factor list.** The analyzer returns a diagnosis, but [no factors are defined](backend/tools/factors/architecture.md). Propositional frame, aspect, recipient, and object relatedness are candidates, not decisions. A factor earns a file once a diagnosis keeps pointing at it.
 
 **What the support aids are.** Selection is wired, the registry is empty. A reframe is one of these rather than a step of its own, which is settled, but whether the set means examples in context, a reword, or neither is not.
 
-**The learner model.** A stub at the port, kept as a boundary for the sentence mining it will hold and the exposure pacing it will eventually drive.
+**The learner model.** A stub at the port. It reads and writes on every turn, so the boundary is kept — but the spectrum, and the sentence mining it will hold, are not built.
 
-**Confidence gating.** Nothing is gated on how sure the decision layer is. The inner negotiation loop is the obvious place — it should stop on certainty rather than on a count of attempts — but no threshold is set.
+**Confidence gating.** Nothing is gated on how sure a judgement is. The tangent is the obvious place — it should stop on certainty rather than on a count of attempts — but no threshold is set.
 
 ## Known shape problems
 
-These are open questions in the flow itself, not gaps in the components.
+These are open questions in the engine, not gaps in the components.
 
-**The negotiation loop has no first question.** `negotiate` reads from the learner before any support aid is selected, so it depends on the engine asking something unprompted. If a reframe becomes a selectable aid, the ordering probably inverts: choose the aid, then ask. This changes what `speak` is called with, so it wants settling before the speaker is built.
+**The tangent is unbounded.** Nothing caps the attempts, and against a real analyzer it could run for as long as the learner keeps answering. The stopping point is a judgement about understanding rather than a count, but nothing bounds it.
 
-**The inner loop is unbounded.** Nothing caps the attempts. The stub judge would stop after one exchange, but against a real decision layer it could run forever.
+**Everything lands on the engine.** The engine orchestrates every component, holds the conversation's history, writes the learner model, and produces every sentence. That was decided, and it holds, but it means the engine is where nearly every architectural decision now lands — including ones not yet made.
 
-**The recast carries the whole turn.** Everything the inner loop established arrives in the main thread as a single Spanish sentence. Whether the recast should also carry a trace of what was corrected is open, and it interacts with the main thread staying a clean feed.
+**The analyzer is on the critical path.** Every turn asks for a diagnosis, and a missed one asks twice. Its cost is a latency floor on speaking. Fine for now, and worth remembering before it is a surprise.
+
+**Nothing above the engine can see a tangent.** It is internal by design, so the loop cannot observe one. That is fine for now, but it means a tangent has no trail except what the engine chooses to leave behind.
 
 ## Not built yet
 

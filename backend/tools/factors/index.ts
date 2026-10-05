@@ -1,13 +1,13 @@
 /**
- * Analyzer references — a stub.
+ * Analyzer factors — a stub.
  *
  * Each entry names one way the learner can have gone wrong, written so the
  * analyzer can tell it from its neighbours: what it covers, what belongs to a
- * neighbouring issue instead, a few examples.
+ * neighbouring factor instead, a few examples. It is the content behind a
+ * diagnosis's `factor`.
  *
  * Composed the same way as the tool registries. Adding a factor means adding a
- * file and exporting it from this one — the analyzer picks it up without change,
- * because the option set is built from what is registered.
+ * file and exporting it from this one.
  *
  * The list is open and empty. Propositional frame, aspect, recipient, and object
  * relatedness are the first candidates, and a factor earns a file once a

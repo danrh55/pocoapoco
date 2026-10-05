@@ -1,24 +1,20 @@
-import type { Analyzer, Diagnosis, Utterance, LearnerReply, Decisions } from "../types.ts";
+import type { Analyzer, Diagnosis, LearnerReply, Utterance } from "../types.ts";
 
 /**
  * The response analyzer — a stub.
  *
  * Reads the learner's reply and returns a diagnosis: whether the intent was
- * missed, and which issue accounts for it. Two questions in one decision-layer
- * call — missed or not, and if so which issue.
+ * missed, and which factor accounts for it.
  *
- * The issue list is open and not yet written. Propositional frame, aspect,
- * recipient, and object relatedness are the first candidates; an issue earns a
- * file once a diagnosis keeps pointing at it.
+ * The engine calls it at the outer turn and again inside the tangent, with the
+ * same contract both times — the target differs, the judgement does not. A reply
+ * judged against what the agent asked or stated; an attempt judged against what
+ * the agent has just asked again.
  *
  * Not implemented.
  */
 export const analyzer: Analyzer = {
-  analyze: async (_input: {
-    utterance: Utterance;
-    reply: LearnerReply;
-    decisions: Decisions;
-  }): Promise<Diagnosis> => {
+  analyze: async (_input: { utterance: Utterance; reply: LearnerReply }): Promise<Diagnosis> => {
     throw new Error("analyzer.analyze not implemented");
   },
 };

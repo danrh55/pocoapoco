@@ -1,5 +1,5 @@
 # Correction tools
 
-The aids that work the learner's own Spanish.
+The aids that work the learner's own writing.
 
-Unreachable in this version — see [the version document](../../../version.md).
+Out of scope for this version — see [the version document](../../../version.md).
